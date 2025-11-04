@@ -1,0 +1,23 @@
+---
+// Googlee Fontsなどはここで読み込む
+
+import '@/styles/styles.scss';
+
+import Footer from '@/components/base/Footer.astro';
+import Header from '@/components/base/Header.astro';
+import Meta from '@/components/base/Meta.astro';
+
+const props = Astro.props;
+---
+
+<!doctype html>
+<html lang="ja">
+	<head>
+		<Meta {...props} />
+	</head>
+	<body>
+    <Header />
+		<slot />
+    <Footer />
+	</body>
+</html>

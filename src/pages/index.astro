@@ -1,0 +1,25 @@
+---
+import Card from '@/components/ui/Card.astro';
+import { cardData } from '@/data/card-data';
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout>
+  <h1>TOPページ</h1>
+
+  <div class="card__container">
+    {cardData.map((card) => (
+      <Card card={card} />
+    ))}
+  </div>
+</Layout>
+
+<style lang="scss">
+  .card__container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin: 3rem 2rem;
+    padding-inline: 1rem;
+  }
+</style>
