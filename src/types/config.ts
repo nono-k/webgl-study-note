@@ -12,3 +12,8 @@ export type HeaderLink = {
   name: string;
   url: string;
 };
+
+export type Category = {
+  name: string;
+  slug: string;
+};
