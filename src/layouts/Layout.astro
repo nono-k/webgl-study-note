@@ -3,8 +3,6 @@
 
 import '@/styles/styles.scss';
 
-import Footer from '@/components/base/Footer.astro';
-import Header from '@/components/base/Header.astro';
 import Meta from '@/components/base/Meta.astro';
 
 const props = Astro.props;
@@ -16,8 +14,6 @@ const props = Astro.props;
 		<Meta {...props} />
 	</head>
 	<body>
-    <Header />
 		<slot />
-    <Footer />
 	</body>
 </html>
