@@ -1,8 +1,8 @@
 import type { HeaderLink, SiteConfig } from '@/types/config';
 
 export const siteConfig: SiteConfig = {
-  siteTitle: 'My Site',
-  siteDesc: 'My Site Description',
+  siteTitle: 'WebGL Study Note',
+  siteDesc: 'A place to study WebGL and GLSL',
   siteUrl: 'https://example.com',
   siteType: 'website',
   siteLocale: 'ja_JP',
