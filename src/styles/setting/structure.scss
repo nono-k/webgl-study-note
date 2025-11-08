@@ -58,6 +58,10 @@ button {
   background: none;
 }
 
+canvas {
+  display: block;
+}
+
 // safari対策でデフォルトの三角形を消す
 summary::-webkit-details-marker {
   display: none;
