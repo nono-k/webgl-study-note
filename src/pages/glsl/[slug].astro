@@ -1,0 +1,24 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+
+interface Props {
+  page: CollectionEntry<"glsl">
+};
+
+export async function getStaticPaths() {
+  const pages = await getCollection("glsl");
+  return pages.map(page => ({
+    params: { slug: page.slug },
+    props: { page }
+  }))
+}
+
+const { page } = Astro.props;
+const { Content } = await page.render();
+---
+
+<Layout>
+  <Content />
+</Layout>
