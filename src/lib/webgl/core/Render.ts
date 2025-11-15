@@ -1,3 +1,6 @@
+import { Mesh } from './Mesh';
+import type { Scene } from './Scene';
+
 export class Render {
   readonly canvas: HTMLCanvasElement;
   readonly gl: WebGL2RenderingContext;
@@ -27,5 +30,17 @@ export class Render {
   fitScreenSquare() {
     const size = Math.min(window.innerWidth, window.innerHeight);
     this.setSize(size, size);
+  }
+
+  render({ scene }: { scene: Scene }) {
+    const gl = this.gl;
+    gl.viewport(0, 0, this.canvas.width, this.canvas.height);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    scene.traverse(node => {
+      if (node instanceof Mesh) {
+        node.draw(gl);
+      }
+    });
   }
 }
