@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.9",
+    "@tweakpane/plugin-essentials": "^0.2.1",
     "astro": "^5.6.1",
-    "sass": "^1.86.3"
+    "sass": "^1.86.3",
+    "tweakpane": "^4.0.5"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
