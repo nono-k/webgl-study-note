@@ -1,5 +1,6 @@
 import type { Render, Scene } from '@/lib/webgl';
 import * as EssentialsPlugin from '@tweakpane/plugin-essentials';
+import type { ImageMetadata } from 'astro';
 import { Pane } from 'tweakpane';
 import { exportJpg } from './ExportJpg';
 
@@ -7,6 +8,18 @@ export class Gui extends Pane {
   constructor() {
     super();
     this.registerPlugin(EssentialsPlugin);
+  }
+
+  addSelectedImage(images: { text: string; value: ImageMetadata }[]) {
+    this.addBlade({
+      view: 'list',
+      label: 'image',
+      options: images.map(image => ({
+        text: image.text,
+        value: image.value.src,
+      })),
+      value: images[0].value.src,
+    });
   }
 
   addSaveBtn(render: Render, scene: Scene) {
