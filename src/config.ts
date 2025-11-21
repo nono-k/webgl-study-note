@@ -3,7 +3,8 @@ import type { HeaderLink, SiteConfig } from '@/types/config';
 export const siteConfig: SiteConfig = {
   siteTitle: 'WebGL Study Note',
   siteDesc: 'A place to study WebGL and GLSL',
-  siteUrl: 'https://example.com',
+  siteUrl: 'https://nono-k.github.io',
+  siteBase: 'webgl-study-note',
   siteType: 'website',
   siteLocale: 'ja_JP',
   siteIcon: '/favicon.svg',
