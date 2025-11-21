@@ -1,8 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import Footer from '@/components/base/Footer.astro';
+import { siteConfig } from '@/config';
 import { glslCategoryList, webglCategoryList} from '@/data/category';
 import Layout from '@/layouts/Layout.astro';
+
+const { siteBase } = siteConfig;
 
 const webglCollections = await getCollection('webgl');
 const glslCollections = await getCollection('glsl');
@@ -18,7 +21,7 @@ const glslCollections = await getCollection('glsl');
           <h3>{category.name}</h3>
           <ul class="post-list">
             {filterPages.map((page) => (
-              <li><a href={`/webgl/${page.slug}`}>{page.data.title}</a></li>
+              <li><a href={`${siteBase}/webgl/${page.slug}`}>{page.data.title}</a></li>
             ))}
           </ul>
         )
@@ -33,7 +36,7 @@ const glslCollections = await getCollection('glsl');
           <h3>{category.name}</h3>
           <ul class="post-list">
             {filterPages.map((page) => (
-              <li><a href={`/glsl/${page.slug}`}>{page.data.title}</a></li>
+              <li><a href={`${siteBase}/glsl/${page.slug}`}>{page.data.title}</a></li>
             ))}
           </ul>
         )
