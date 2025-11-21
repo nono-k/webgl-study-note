@@ -17,10 +17,11 @@ const glslCollections = await getCollection('glsl');
       <h2>WebGL</h2>
       {webglCategoryList.map((category) => {
         const filterPages = webglCollections.filter((page) => page.data.category === category.name);
+        const sortPages = filterPages.sort((a, b) => a.data.order - b.data.order);
         return (
           <h3>{category.name}</h3>
           <ul class="post-list">
-            {filterPages.map((page) => (
+            {sortPages.map((page) => (
               <li><a href={`/${siteBase}/webgl/${page.slug}`}>{page.data.title}</a></li>
             ))}
           </ul>
@@ -31,14 +32,23 @@ const glslCollections = await getCollection('glsl');
     <section>
       <h2>GLSL</h2>
       {glslCategoryList.map((category) => {
-        const filterPages = glslCollections.filter((page) => page.data.category === category.name);
+        const filterSubPages = glslCollections.filter((page) => page.data.category === category.name);
         return (
+          <>
           <h3>{category.name}</h3>
-          <ul class="post-list">
-            {filterPages.map((page) => (
-              <li><a href={`/${siteBase}/glsl/${page.slug}`}>{page.data.title}</a></li>
-            ))}
-          </ul>
+          {category.subCategory.map((subCategory) => {
+            const filterPages = filterSubPages.filter((page) => page.data.subCategory === subCategory);
+            const sortPages = filterPages.sort((a, b) => a.data.order - b.data.order);
+            return (
+              <h4>{subCategory}</h4>
+              <ul class="post-list">
+                {sortPages.map((page) => (
+                  <li><a href={`/${siteBase}/glsl/${page.slug}`}>{page.data.title}</a></li>
+                ))}
+              </ul>
+            )
+          })}
+          </>
         )
       })}
     </section>
@@ -60,17 +70,28 @@ const glslCollections = await getCollection('glsl');
 
   h2 {
     font-weight: 700;
+    font-size: 1.5rem;
   }
 
   h3 {
     font-weight: 500;
-    margin-top: 0.5rem;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+  }
+
+  h4 {
+    font-weight: 500;
+    font-size: 1.05rem;
+    margin-top: 0.75rem;
   }
 
   .post-list {
     list-style: inherit;
-    padding-left: 1.5rem;
-    margin-top: 0.25rem;
+    padding-left: 2rem;
+    margin-top: 0.35rem;
+    > * + * {
+      margin-top: 0.25rem;
+    }
     li {
       list-style: inherit;
     }

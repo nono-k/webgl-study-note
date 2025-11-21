@@ -14,7 +14,13 @@ export type HeaderLink = {
   url: string;
 };
 
-export type Category = {
+export type webglCategory = {
   name: string;
   slug: string;
+};
+
+export type glslCategory = {
+  name: string;
+  slug: string;
+  subCategory: string[];
 };
