@@ -21,7 +21,7 @@ const glslCollections = await getCollection('glsl');
           <h3>{category.name}</h3>
           <ul class="post-list">
             {filterPages.map((page) => (
-              <li><a href={`${siteBase}/webgl/${page.slug}`}>{page.data.title}</a></li>
+              <li><a href={`/${siteBase}/webgl/${page.slug}`}>{page.data.title}</a></li>
             ))}
           </ul>
         )
@@ -36,7 +36,7 @@ const glslCollections = await getCollection('glsl');
           <h3>{category.name}</h3>
           <ul class="post-list">
             {filterPages.map((page) => (
-              <li><a href={`${siteBase}/glsl/${page.slug}`}>{page.data.title}</a></li>
+              <li><a href={`/${siteBase}/glsl/${page.slug}`}>{page.data.title}</a></li>
             ))}
           </ul>
         )
