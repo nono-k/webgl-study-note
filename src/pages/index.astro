@@ -32,23 +32,15 @@ const glslCollections = await getCollection('glsl');
     <section>
       <h2>GLSL</h2>
       {glslCategoryList.map((category) => {
-        const filterSubPages = glslCollections.filter((page) => page.data.category === category.name);
+        const filterPages = glslCollections.filter((page) => page.data.category === category.name);
+        const sortPages = filterPages.sort((a, b) => a.data.order - b.data.order);
         return (
-          <>
           <h3>{category.name}</h3>
-          {category.subCategory.map((subCategory) => {
-            const filterPages = filterSubPages.filter((page) => page.data.subCategory === subCategory);
-            const sortPages = filterPages.sort((a, b) => a.data.order - b.data.order);
-            return (
-              <h4>{subCategory}</h4>
-              <ul class="post-list">
-                {sortPages.map((page) => (
-                  <li><a href={`/${siteBase}/glsl/${page.slug}`}>{page.data.title}</a></li>
-                ))}
-              </ul>
-            )
-          })}
-          </>
+          <ul class="post-list">
+            {sortPages.map((page) => (
+              <li><a href={`/${siteBase}/glsl/${page.slug}`}>{page.data.title}</a></li>
+            ))}
+          </ul>
         )
       })}
     </section>
@@ -77,12 +69,6 @@ const glslCollections = await getCollection('glsl');
     font-weight: 500;
     font-size: 1.2rem;
     margin-top: 1rem;
-  }
-
-  h4 {
-    font-weight: 500;
-    font-size: 1.05rem;
-    margin-top: 0.75rem;
   }
 
   .post-list {

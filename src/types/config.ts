@@ -22,5 +22,4 @@ export type webglCategory = {
 export type glslCategory = {
   name: string;
   slug: string;
-  subCategory: string[];
 };
