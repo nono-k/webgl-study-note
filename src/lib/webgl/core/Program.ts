@@ -75,7 +75,11 @@ export class Program {
 
   setUniform(gl: WebGL2RenderingContext, loc: WebGLUniformLocation, value: number | number[] | Float32Array) {
     if (typeof value === 'number') {
-      gl.uniform1f(loc, value);
+      if (Number.isInteger(value)) {
+        gl.uniform1i(loc, value);
+      } else {
+        gl.uniform1f(loc, value);
+      }
     } else if (Array.isArray(value)) {
       switch (value.length) {
         case 1:
