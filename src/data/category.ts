@@ -7,4 +7,8 @@ export const glslCategoryList: glslCategory[] = [
     name: '色調変換を用いたエフェクト処理',
     slug: 'color-tone-conversion',
   },
+  {
+    name: '空間フィルタリング',
+    slug: 'spatial-filtering',
+  },
 ];
