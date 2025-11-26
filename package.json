@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.9",
+    "@fontsource/tomorrow": "^5.2.8",
+    "@fontsource/zen-kaku-gothic-new": "^5.2.7",
     "@tweakpane/plugin-essentials": "^0.2.1",
     "astro": "^5.6.1",
     "sass": "^1.86.3",
