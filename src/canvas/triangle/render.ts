@@ -8,12 +8,12 @@ export const onload = () => {
   const render = new Render(canvas);
   render.fitScreen();
   const gl = render.gl;
-  gl.clearColor(0.0, 0.0, 0.0, 1.0);
+  gl.clearColor(1.0, 1.0, 1.0, 1.0);
 
   const scene = new Scene();
 
   const positions = new Float32Array([-0.5, -0.5, 0, 0.5, -0.5, 0, 0, 0.5, 0]);
-  const uvs = new Float32Array([0, 0, 1, 0, 1, 1]);
+  const uvs = new Float32Array([0, 0, 1, 0, 0, 1]);
   const indices = new Uint16Array([0, 1, 2]);
 
   const geometry = new Geometry(gl, {
