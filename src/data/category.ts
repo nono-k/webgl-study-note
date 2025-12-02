@@ -11,4 +11,8 @@ export const glslCategoryList: glslCategory[] = [
     name: '空間フィルタリング',
     slug: 'spatial-filtering',
   },
+  {
+    name: 'エッジ摘出',
+    slug: 'edge-extraction',
+  },
 ];
