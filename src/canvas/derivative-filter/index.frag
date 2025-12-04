@@ -53,7 +53,8 @@ void main() {
     color = vec3(sqrt(gx * gx + gy * gy));
   }
 
-  // color *= 4.0;
+  // エッジを強調するために定数倍かける
+  color *= 4.0;
 
   fragColor = vec4(color, 1.0);
 }
