@@ -6,10 +6,7 @@ export class Mesh extends Scene {
   geometry: Geometry;
   program: Program;
 
-  constructor(
-    gl: WebGL2RenderingContext,
-    { geometry, program }: { geometry: Geometry; program: Program },
-  ) {
+  constructor(gl: WebGL2RenderingContext, { geometry, program }: { geometry: Geometry; program: Program }) {
     super();
     this.geometry = geometry;
     this.program = program;
@@ -23,5 +20,7 @@ export class Mesh extends Scene {
     geometry.bind(program);
 
     gl.drawElements(gl.TRIANGLES, geometry.indexCount, gl.UNSIGNED_SHORT, 0);
+
+    geometry.unbind();
   }
 }
