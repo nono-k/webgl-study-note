@@ -15,4 +15,8 @@ export const glslCategoryList: glslCategory[] = [
     name: 'エッジ摘出',
     slug: 'edge-extraction',
   },
+  {
+    name: 'ブラー処理',
+    slug: 'blur',
+  },
 ];
