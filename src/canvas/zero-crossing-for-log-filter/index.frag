@@ -36,6 +36,7 @@ void main() {
   // 中間的な濃淡になるように一定値を足す
   color += 0.5;
 
+  // ゼロ交差判定
   if (color.r >= -threshold && color.r <= threshold) {
     color = vec3(1.0);
   } else {

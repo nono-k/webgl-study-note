@@ -11,10 +11,10 @@ import image04 from '@/assets/images/winter.jpg';
 
 export const onload = () => {
   const images = [
+    { text: 'winter', value: image04 },
     { text: 'autumn', value: image01 },
     { text: 'spring', value: image02 },
     { text: 'summer', value: image03 },
-    { text: 'winter', value: image04 },
   ];
   const textures: Texture[] = [];
 
@@ -49,8 +49,8 @@ export const onload = () => {
     uniforms: {
       uTexture: { value: textures[0] },
       uResolution: { value: [canvas.width, canvas.height] },
-      sigma: { value: 1.2 },
-      threshold: { value: 0.01 },
+      sigma: { value: 1.3 },
+      threshold: { value: 0.1 },
     },
   });
 
