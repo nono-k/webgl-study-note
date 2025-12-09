@@ -62,6 +62,7 @@ export class Program {
 
     for (const name in this.uniforms) {
       const value = this.uniforms[name].value;
+      const type = this.uniforms[name].type;
       const loc = gl.getUniformLocation(this.program, name);
       if (loc === null) continue;
 
@@ -69,16 +70,16 @@ export class Program {
         value.bind();
       }
 
-      this.setUniform(gl, loc, value);
+      this.setUniform(gl, loc, value, type);
     }
   }
 
-  setUniform(gl: WebGL2RenderingContext, loc: WebGLUniformLocation, value: number | number[] | Float32Array) {
+  setUniform(gl: WebGL2RenderingContext, loc: WebGLUniformLocation, value: number | number[] | Float32Array, type: string) {
     if (typeof value === 'number') {
-      if (Number.isInteger(value)) {
-        gl.uniform1i(loc, value);
-      } else {
+      if (type === 'float') {
         gl.uniform1f(loc, value);
+      } else {
+        gl.uniform1i(loc, value);
       }
     } else if (Array.isArray(value)) {
       switch (value.length) {
