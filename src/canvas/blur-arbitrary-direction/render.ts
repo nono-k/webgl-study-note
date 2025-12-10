@@ -49,8 +49,8 @@ export const onload = () => {
     uniforms: {
       uTexture: { value: textures[0] },
       uResolution: { value: [canvas.width, canvas.height] },
-      angle: { value: 45.0, type: 'float' },
-      radius: { value: 5.0, type: 'float' },
+      angle: { value: 45.0 },
+      radius: { value: 5.0 },
     },
   });
 
