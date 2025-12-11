@@ -76,10 +76,10 @@ export class Program {
 
   setUniform(gl: WebGL2RenderingContext, loc: WebGLUniformLocation, value: number | number[] | Float32Array, type: string) {
     if (typeof value === 'number') {
-      if (type === 'float') {
-        gl.uniform1f(loc, value);
-      } else {
+      if (type === 'init') {
         gl.uniform1i(loc, value);
+      } else {
+        gl.uniform1f(loc, value);
       }
     } else if (Array.isArray(value)) {
       switch (value.length) {
