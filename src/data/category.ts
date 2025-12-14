@@ -19,4 +19,8 @@ export const glslCategoryList: glslCategory[] = [
     name: 'ブラー処理',
     slug: 'blur',
   },
+  {
+    name: 'その他',
+    slug: 'other',
+  },
 ];
