@@ -49,7 +49,7 @@ export const onload = () => {
     uniforms: {
       uTexture: { value: textures[0] },
       uResolution: { value: [canvas.width, canvas.height] },
-      select: { value: 0 },
+      select: { value: 0, type: 'init' },
     },
   });
 
