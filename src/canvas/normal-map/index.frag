@@ -19,6 +19,7 @@ void main() {
   vec2 uv = vUv;
   vec2 pos = 1.0 / uResolution;
 
+  // 偏微分の近似を行うため差分を求める
   float hL = height(uv - vec2(pos.x, 0.0));
   float hR = height(uv + vec2(pos.x, 0.0));
   float hD = height(uv - vec2(0.0, pos.y));
