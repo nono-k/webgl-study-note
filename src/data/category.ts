@@ -20,6 +20,10 @@ export const glslCategoryList: glslCategory[] = [
     slug: 'blur',
   },
   {
+    name: '陰影付け処理を応用した特殊効果',
+    slug: 'shading',
+  },
+  {
     name: 'その他',
     slug: 'other',
   },
