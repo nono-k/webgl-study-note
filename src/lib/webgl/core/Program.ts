@@ -75,6 +75,11 @@ export class Program {
   }
 
   setUniform(gl: WebGL2RenderingContext, loc: WebGLUniformLocation, value: number | number[] | Float32Array, type: string) {
+    if (typeof value === 'boolean') {
+      gl.uniform1i(loc, value ? 1 : 0);
+      return;
+    }
+
     if (typeof value === 'number') {
       if (type === 'init') {
         gl.uniform1i(loc, value);
