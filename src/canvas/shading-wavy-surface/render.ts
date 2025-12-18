@@ -55,7 +55,6 @@ export const onload = () => {
       lightDirectionX: { value: -1.0 },
       lightDirectionY: { value: -1.0 },
       ambient: { value: 0.3 },
-      specular: { value: 32.0 },
       isRefraction: { value: false },
     },
   });

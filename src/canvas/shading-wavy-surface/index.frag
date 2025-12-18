@@ -43,7 +43,7 @@ vec3 lighting(vec3 color, vec3 normal) {
 // 屈折量計算
 float getRef(float dx, float dz, float h, float ref) {
   // 入射角計算
-  float rA = sqrt(dx*dx + dz * dz);
+  float rA = sqrt(dx * dx + dz * dz);
   float sinA = -dx / rA;
   float tanA = -dx / dz;
 
@@ -77,6 +77,9 @@ void main() {
     dy = amplitude * omega * cos(omega * uv.y);
   }
 
+  // 波による擬似法線
+  vec3 normal = vec3(-dx, -dy, 1.0);
+
   // 屈折率
   float ref = 0.75;
 
@@ -100,9 +103,8 @@ void main() {
   float g = texture(uTexture, uv + vec2(offXG, 0.0)).g;
   float b = texture(uTexture, uv + vec2(offXB, 0.0)).b;
 
+  // 屈折後の色
   vec3 refrColor = vec3(r, g, b);
-
-  vec3 normal = vec3(-dx, -dy, 1.0);
 
   vec3 texColor = texture(uTexture, uv).rgb;
 
