@@ -91,22 +91,22 @@ export function invert(out: Mat3, a: Mat3): Mat3 {
     a21 = a[7],
     a22 = a[8];
 
-  const b01 = a22 * a11 - a12 * a21;
-  const b11 = -a22 * a10 + a12 * a20;
-  const b21 = a21 * a10 - a11 * a20;
+  const b01 = a11 * a22 - a12 * a21;
+  const b11 = a12 * a20 - a10 * a22;
+  const b21 = a10 * a21 - a11 * a20;
 
   let det = a00 * b01 + a01 * b11 + a02 * b21;
   det = 1.0 / det;
 
   out[0] = b01 * det;
-  out[1] = (-a22 * a01 + a02 * a21) * det;
-  out[2] = (a12 * a01 - a02 * a11) * det;
+  out[1] = (a02 * a21 - a01 * a22) * det;
+  out[2] = (a01 * a12 - a02 * a11) * det;
   out[3] = b11 * det;
-  out[4] = (a22 * a00 - a02 * a20) * det;
-  out[5] = (-a12 * a00 + a02 * a10) * det;
+  out[4] = (a00 * a22 - a02 * a20) * det;
+  out[5] = (a02 * a10 - a00 * a12) * det;
   out[6] = b21 * det;
-  out[7] = (-a21 * a00 + a01 * a20) * det;
-  out[8] = (a11 * a00 - a01 * a10) * det;
+  out[7] = (a01 * a20 - a00 * a21) * det;
+  out[8] = (a00 * a11 - a01 * a10) * det;
   return out;
 }
 
@@ -122,7 +122,7 @@ export function determinant(a: Mat3): number {
     a21 = a[7],
     a22 = a[8];
 
-  return a00 * (a22 * a11 - a12 * a21) + a01 * (-a22 * a10 + a20) + a02 * (a21 * a10 - a11 * a20);
+  return a00 * (a11 * a22 - a12 * a21) + a01 * (a12 * a20 - a10 * a22) + a02 * (a10 * a21 - a11 * a20);
 }
 
 export function multiply(out: Mat3, a: Mat3, b: Mat3): Mat3 {
