@@ -4,7 +4,7 @@ precision mediump float;
 uniform sampler2D uTexture;
 uniform vec2 uResolution;
 uniform bool isHorizon;
-uniform float wavelength; // 波数
+uniform float wavelength; // 周波数
 uniform float amplitude; // 振幅
 // 光の方向(x, y)
 uniform float lightDirectionX;
@@ -64,7 +64,7 @@ void main() {
   vec2 uv = vUv;
   vec2 pos = 1.0 / uResolution;
 
-  // 波長
+  // 角周波数
   float omega = 2.0 * PI / wavelength;
 
   float dx = 0.0;
@@ -88,7 +88,7 @@ void main() {
   float refG = ref;
   float refB = ref + 0.05;
 
-  // 屈折の強さ係数
+  // 屈折面からサンプリング面までの距離
   float h = 0.02;
 
   // 波の方向に応じたオフセット量

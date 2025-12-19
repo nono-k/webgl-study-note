@@ -3,7 +3,7 @@ precision mediump float;
 
 uniform sampler2D uTexture;
 uniform vec2 uResolution;
-uniform float wavelength; // 波数
+uniform float wavelength; // 周波数
 uniform float amplitude; // 振幅
 // 光の方向(x, y)
 uniform float lightDirectionX;
@@ -54,14 +54,14 @@ void main() {
   // 中心からの距離
   float r = length(p);
 
-  // 波長
+  // 角周波数
   float omega = 2.0 * PI / wavelength;
 
-  // 高さ変化の勾配量（∂z/∂r）
+  // 高さ変化の勾配量
   float dz = amplitude * omega * cos(omega * r);
 
   // 勾配ベクトル（∂z/∂x, ∂z/∂y）
-  vec2 grad = dz * ((p) / r);
+  vec2 grad = dz * (p / r);
 
   // 波による擬似法線
   vec3 normal = vec3(-grad.x, -grad.y, 1.0);
