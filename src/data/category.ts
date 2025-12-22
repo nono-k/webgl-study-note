@@ -24,6 +24,10 @@ export const glslCategoryList: glslCategory[] = [
     slug: 'shading',
   },
   {
+    name: 'ユニークな特殊効果',
+    slug: 'unique',
+  },
+  {
     name: 'その他',
     slug: 'other',
   },
