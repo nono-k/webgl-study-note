@@ -28,6 +28,10 @@ export const glslCategoryList: glslCategory[] = [
     slug: 'unique',
   },
   {
+    name: '変形処理',
+    slug: 'transform',
+  },
+  {
     name: 'その他',
     slug: 'other',
   },
