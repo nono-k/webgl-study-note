@@ -11,6 +11,7 @@ out vec4 fragColor;
 
 const float PI = 3.1415926;
 
+// x・y軸表示
 vec3 drawAxis(vec2 p) {
   float axisW = fwidth(p.x) * 2.0;
   float xAxis = smoothstep(axisW, 0.0, abs(p.y));
@@ -72,16 +73,16 @@ void main() {
 
   if (isCenter) {
     M =
-        translate(vec2(0.5)) *
-        scale(vec2(1.0, aspect)) *
-        skew(skewX, skewY) *
-        scale(vec2(1.0, 1.0 / aspect)) *
-        translate(vec2(-0.5));
+      translate(vec2(0.5)) *
+      scale(vec2(1.0, aspect)) *
+      skew(skewX, skewY) *
+      scale(vec2(1.0, 1.0 / aspect)) *
+      translate(vec2(-0.5));
   } else {
     M =
-        scale(vec2(1.0, aspect)) *
-        skew(skewX, skewY) *
-        scale(vec2(1.0, 1.0 / aspect));
+      scale(vec2(1.0, aspect)) *
+      skew(skewX, skewY) *
+      scale(vec2(1.0, 1.0 / aspect));
   }
 
   vec2 q = (inverse(M) * vec3(pos, 1.0)).xy;
