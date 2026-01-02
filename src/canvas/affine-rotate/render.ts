@@ -50,6 +50,7 @@ export const onload = () => {
       uTexture: { value: textures[0] },
       uResolution: { value: [canvas.width, canvas.height] },
       angle: { value: 0 },
+      isCenter: { value: false },
     },
   });
 
@@ -71,19 +72,26 @@ export const onload = () => {
   window.addEventListener('resize', resize);
 
   const angle = program.uniforms.angle;
+  const isCenter = program.uniforms.isCenter;
 
   const PARAMS = {
     angle: angle.value,
+    isCenter: isCenter.value,
   };
 
   // biome-ignore format: este array no debe ser formateado
   const pane = new Gui();
   pane.addBinding(PARAMS, 'angle', { min: 0, max: 360, step: 0.01 });
+  pane.addBinding(PARAMS, 'isCenter', { label: 'Center' });
   pane.addSelectedImage(images);
   pane.addSaveBtn(render, scene);
 
   pane.on('change', e => {
     angle.value = PARAMS.angle;
+
+    if (e.target.label === 'Center') {
+      isCenter.value = e.value;
+    }
 
     const selectedImage = images.findIndex(image => image.value.src === e.value);
     if (selectedImage !== -1) {

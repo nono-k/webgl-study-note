@@ -3,6 +3,7 @@ precision mediump float;
 
 uniform sampler2D uTexture;
 uniform float angle;
+uniform bool isCenter;
 
 in vec2 vUv;
 out vec4 fragColor;
@@ -51,7 +52,7 @@ mat3 rotate(float rad) {
 
 void main() {
   vec2 uv = vUv;
-  vec2 pos = uv * 4.0 - 1.0;
+  vec2 pos = uv * 4.0 - 1.5;
 
   vec3 color = drawAxis(pos);
 
@@ -61,13 +62,21 @@ void main() {
 
   float aspect = 1.777777; // 16:9
 
-  // 出力UV → 元画像UV への逆変換行列
-  mat3 M =
+  mat3 M;
+
+  if (isCenter) {
+    M =
       translate(vec2(0.5)) *
       scale(vec2(1.0, aspect)) *
       rotate(rad) *
       scale(vec2(1.0, 1.0 / aspect)) *
       translate(vec2(-0.5));
+  } else {
+    M =
+      scale(vec2(1.0, aspect)) *
+      rotate(rad) *
+      scale(vec2(1.0, 1.0 / aspect));
+  }
 
   vec2 q = (inverse(M) * vec3(pos, 1.0)).xy;
 
