@@ -10,6 +10,7 @@ out vec4 fragColor;
 
 const float PI = 3.1415926;
 
+// x・y軸表示
 vec3 drawAxis(vec2 p) {
   float axisW = fwidth(p.x) * 2.0;
   float xAxis = smoothstep(axisW, 0.0, abs(p.y));
@@ -57,8 +58,6 @@ void main() {
   vec3 color = drawAxis(pos);
 
   float rad = angle * PI / 180.0;
-  float c = cos(rad);
-  float s = sin(rad);
 
   float aspect = 1.777777; // 16:9
 
