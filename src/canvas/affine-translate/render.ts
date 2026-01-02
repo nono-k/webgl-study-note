@@ -81,8 +81,8 @@ export const onload = () => {
 
   // biome-ignore format: este array no debe ser formateado
   const pane = new Gui();
-  pane.addBinding(PARAMS, 'translateX', { min: -5, max: 5, step: 0.01 });
-  pane.addBinding(PARAMS, 'translateY', { min: -5, max: 5, step: 0.01 });
+  pane.addBinding(PARAMS, 'translateX', { min: -2, max: 1, step: 0.01 });
+  pane.addBinding(PARAMS, 'translateY', { min: -2, max: 1, step: 0.01 });
   pane.addSelectedImage(images);
   pane.addSaveBtn(render, scene);
 
