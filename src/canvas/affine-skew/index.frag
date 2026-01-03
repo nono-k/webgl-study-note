@@ -89,8 +89,7 @@ void main() {
 
   if (q.x >= 0.0 && q.x <= 1.0 &&
       q.y >= 0.0 && q.y <= 1.0) {
-    vec3 tex = texture(uTexture, q).rgb;
-    color = mix(color, tex, 1.0);
+    color = texture(uTexture, q).rgb;
   }
 
   fragColor = vec4(color, 1.0);
