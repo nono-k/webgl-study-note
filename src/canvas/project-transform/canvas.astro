@@ -1,0 +1,20 @@
+<canvas id="webgl-canvas"></canvas>
+<canvas id="ui-canvas"
+  style="position:absolute; inset:0; pointer-events:none;">
+</canvas>
+<p class="text">画像内をクリックして確認</p>
+
+<style>
+  .text {
+    position: absolute;
+    left: 50%;
+    translate: -50% 0;
+    bottom: 2rem;
+    color: white;
+  }
+</style>
+
+<script>
+  import { onload } from './render';
+  window.onload = onload;
+</script>
