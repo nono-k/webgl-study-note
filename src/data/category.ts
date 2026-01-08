@@ -32,6 +32,10 @@ export const glslCategoryList: glslCategory[] = [
     slug: 'transform',
   },
   {
+    name: '擬似階調',
+    slug: 'pseudo-gradation',
+  },
+  {
     name: 'その他',
     slug: 'other',
   },
