@@ -35,27 +35,27 @@ float dithe(vec2 p, int[16] pat) {
 }
 
 void main() {
-    vec2 uv = vUv;
-    uv.y *= 4.0;
+  vec2 uv = vUv;
+  uv.y *= 4.0;
 
-    int channel = int(mod(uv.y, 4.0));
+  int channel = int(mod(uv.y, 4.0));
 
-    vec2 pixel = gl_FragCoord.xy;
+  vec2 pixel = gl_FragCoord.xy;
 
-    float threshold;
+  float threshold;
 
-    if (channel == 0) {
-      threshold = dithe(pixel, swirl);
-    } else if (channel == 1) {
-      threshold = dithe(pixel, halftone);
-    } else if (channel == 2) {
-      threshold = dithe(pixel, bayer);
-    } else {
-      fragColor = vec4(vec3(floor(uv.x * 16.0) / (16.0 - 1.0)), 1.0);
-      return;
-    }
+  if (channel == 0) {
+    threshold = dithe(pixel, swirl);
+  } else if (channel == 1) {
+    threshold = dithe(pixel, halftone);
+  } else if (channel == 2) {
+    threshold = dithe(pixel, bayer);
+  } else {
+    fragColor = vec4(vec3(floor(uv.x * 16.0) / (16.0 - 1.0)), 1.0);
+    return;
+  }
 
-    float color = uv.x > threshold ? 1.0 : 0.0;
+  float color = uv.x > threshold ? 1.0 : 0.0;
 
-    fragColor = vec4(vec3(color), 1.0);
+  fragColor = vec4(vec3(color), 1.0);
 }

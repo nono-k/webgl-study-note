@@ -71,13 +71,13 @@ export const onload = () => {
 
   // biome-ignore format: este array no debe ser formateado
   const pane = new Gui();
-  pane.addSelectedImage(images);
+  // pane.addSelectedImage(images);
   pane.addSaveBtn(render, scene);
 
-  pane.on('change', e => {
-    const selectedImage = images.findIndex(image => image.value.src === e.value);
-    if (selectedImage !== -1) {
-      program.uniforms.uTexture.value = textures[selectedImage];
-    }
-  });
+  // pane.on('change', e => {
+  //   const selectedImage = images.findIndex(image => image.value.src === e.value);
+  //   if (selectedImage !== -1) {
+  //     program.uniforms.uTexture.value = textures[selectedImage];
+  //   }
+  // });
 };
