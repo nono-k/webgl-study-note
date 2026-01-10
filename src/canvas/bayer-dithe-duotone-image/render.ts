@@ -51,8 +51,8 @@ export const onload = () => {
       uTexture: { value: textures[0] },
       uResolution: { value: [canvas.width, canvas.height] },
       k: { value: 2, type: 'init' },
-      lowcolor: { value: [0.0, 0.0, 0.0] },
-      highcolor: { value: [1.0, 1.0, 1.0] },
+      lowcolor: { value: [0.05, 0.05, 0.05] },
+      highcolor: { value: [0.8, 0.0, 0.0] },
     },
   });
 

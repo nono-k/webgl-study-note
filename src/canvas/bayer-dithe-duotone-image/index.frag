@@ -112,9 +112,6 @@ void main() {
 
   float bw = value > threshold ? 1.0 : 0.0;
 
-  // vec3 lowcolor = vec3(0.141, 0.0311, 0.310);
-  // vec3 highcolor = vec3(0.957, 0.239, 0.122);
   vec3 color = mix(lowcolor, highcolor, bw);
-
   fragColor = vec4(color, 1.0);
 }
