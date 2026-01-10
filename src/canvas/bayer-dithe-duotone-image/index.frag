@@ -1,0 +1,120 @@
+#version 300 es
+precision mediump float;
+
+uniform sampler2D uTexture;
+uniform vec2 uResolution;
+uniform int k;
+uniform vec3 lowcolor;
+uniform vec3 highcolor;
+
+in vec2 vUv;
+out vec4 fragColor;
+
+// グレイスケール
+float gray(vec3 color) {
+  return dot(color, vec3(0.299, 0.587, 0.114));
+}
+
+const int bayer2x2[4] = int[] (
+  1, 3,
+  4, 2
+);
+
+const int bayer4x4[16] = int[] (
+  1, 9, 3, 11,
+  13, 5, 15, 7,
+  4, 12,  2, 10,
+  16, 8, 14, 6
+);
+
+const int bayer8x8[64] = int[] (
+  1, 33, 9, 41, 3, 35, 11, 43,
+  49, 17, 57, 25, 51, 19, 59, 27,
+  13, 45, 5, 37, 15, 47, 7, 39,
+  61, 29, 53, 21, 63, 31, 55, 23,
+  4, 36, 12, 44, 2, 34, 10, 42,
+  52, 20, 60, 28, 50, 18, 58, 26,
+  16, 48, 8, 40, 14, 46, 6, 38,
+  64, 32, 56, 24, 62, 30, 54, 22
+);
+
+const int bayer16x16[256] = int[] (
+  1, 129, 33, 161, 9, 137, 41, 169, 3, 131, 35, 163, 11, 139, 43, 171,
+  193, 65, 225, 97, 201, 73, 233, 105, 195, 67, 227, 99, 203, 75, 235, 107,
+  49, 177, 17, 145, 57, 185, 25, 153, 51, 179, 19, 147, 59, 187, 27, 155,
+  241, 113, 209, 81, 249, 121, 217, 89, 243, 115, 211, 83, 251, 123, 219, 91,
+  13, 141, 45, 173, 5, 133, 37, 165, 15, 143, 47, 175, 7, 135, 39, 167,
+  205, 77, 237, 109, 197, 69, 229, 101, 207, 79, 239, 111, 199, 71, 231, 103,
+  61, 189, 29, 157, 53, 181, 21, 149, 63, 191, 31, 159, 55, 183, 23, 151,
+  253, 125, 221, 93, 245, 117, 213, 85, 255, 127, 223, 95, 247, 119, 215, 87,
+  4, 132, 36, 164, 12, 140, 44, 172, 2, 130, 34, 162, 10, 138, 42, 170,
+  196, 68, 228, 100, 204, 76, 236, 108, 194, 66, 226, 98, 202, 74, 234, 106,
+  52, 180, 20, 148, 60, 188, 28, 156, 50, 178, 18, 146, 58, 186, 26, 154,
+  244, 116, 212, 84, 252, 124, 220, 92, 242, 114, 210, 82, 250, 122, 218, 90,
+  16, 144, 48, 176, 8, 136, 40, 168, 14, 142, 46, 174, 6, 134, 38, 166,
+  208, 80, 240, 112, 200, 72, 232, 104, 206, 78, 238, 110, 198, 70, 230, 102,
+  64, 192, 32, 160, 56, 184, 24, 152, 62, 190, 30, 158, 54, 182, 22, 150,
+  256, 128, 224, 96, 248, 120, 216, 88, 254, 126, 222, 94, 246, 118, 214, 86
+);
+
+
+float dithe2x2(vec2 p, int[4] pat) {
+  int x = int(mod(p.x, 2.0));
+  int y = int(mod(p.y, 2.0));
+
+  return float(pat[y * 2 + x]) / 4.0;
+}
+
+float dithe4x4(vec2 p, int[16] pat) {
+  int x = int(mod(p.x, 4.0));
+  int y = int(mod(p.y, 4.0));
+
+  return float(pat[y * 4 + x]) / 16.0;
+}
+
+float dithe8x8(vec2 p, int[64] pat) {
+  int x = int(mod(p.x, 8.0));
+  int y = int(mod(p.y, 8.0));
+
+  return float(pat[y * 8 + x]) / 64.0;
+}
+
+float dithe16x16(vec2 p, int[256] pat) {
+  int x = int(mod(p.x, 16.0));
+  int y = int(mod(p.y, 16.0));
+
+  return float(pat[y * 16 + x]) / 256.0;
+}
+
+void main() {
+  vec2 uv = vUv;
+  vec2 pixel = gl_FragCoord.xy;
+
+  float threshold;
+
+  if (k == 1) {
+    threshold = dithe2x2(pixel, bayer2x2);
+  } else if (k == 2) {
+    threshold = dithe4x4(pixel, bayer4x4);
+  } else if (k == 3) {
+    threshold = dithe8x8(pixel, bayer8x8);
+  } else if (k == 4) {
+    threshold = dithe16x16(pixel, bayer16x16);
+  }
+
+  float value;
+
+  if (uv.x < 0.9) {
+    value = gray(texture(uTexture, uv).rgb);
+  } else {
+    value = uv.y;
+  }
+
+  float bw = value > threshold ? 1.0 : 0.0;
+
+  // vec3 lowcolor = vec3(0.141, 0.0311, 0.310);
+  // vec3 highcolor = vec3(0.957, 0.239, 0.122);
+  vec3 color = mix(lowcolor, highcolor, bw);
+
+  fragColor = vec4(color, 1.0);
+}
