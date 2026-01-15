@@ -36,6 +36,10 @@ export const glslCategoryList: glslCategory[] = [
     slug: 'pseudo-gradation',
   },
   {
+    name: '画像合成(明るく)',
+    slug: 'image-blend-bright',
+  },
+  {
     name: 'その他',
     slug: 'other',
   },
