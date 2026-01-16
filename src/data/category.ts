@@ -44,6 +44,10 @@ export const glslCategoryList: glslCategory[] = [
     slug: 'image-blend-dark',
   },
   {
+    name: '画像合成(コントラスト調整)',
+    slug: 'image-blend-contrast',
+  },
+  {
     name: 'その他',
     slug: 'other',
   },
