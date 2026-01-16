@@ -40,6 +40,10 @@ export const glslCategoryList: glslCategory[] = [
     slug: 'image-blend-bright',
   },
   {
+    name: '画像合成(暗く)',
+    slug: 'image-blend-dark',
+  },
+  {
     name: 'その他',
     slug: 'other',
   },
