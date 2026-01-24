@@ -28,7 +28,7 @@ vec4 sampleQuadrant(
   vec3 cSum = vec3(0.0);
 
   for (int x = x1; x <= x2; x++) {
-    for (int y = y1; y < y2; y++) {
+    for (int y = y1; y <= y2; y++) {
       vec3 c = texture(uTexture, uv + vec2(float(x), float(y)) * texel).rgb;
 
       float l = gray(c);
@@ -39,8 +39,8 @@ vec4 sampleQuadrant(
   }
 
   float n = float(sampleCount);
-  float mean = lSum / n;
-  float var = abs(lSum2 / n - mean * mean);
+  float mean = lSum / n; // 平均値
+  float var = abs(lSum2 / n - mean * mean); // 分散
 
   return vec4(cSum / n, var);
 }
