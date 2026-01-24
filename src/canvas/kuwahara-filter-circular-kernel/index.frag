@@ -39,7 +39,7 @@ void sampleCircularQuadrants(
   for (int x = -r; x <= r; x++) {
     for (int y = -r; y <= r; y++) {
 
-      // 円判定（sqrtなし）
+      // 円判定
       if (x*x + y*y > r2) continue;
 
       int id;
