@@ -90,7 +90,7 @@ vec3 selectMinVarianceColor(QuadAcc q[4]) {
   return result / float(max(hits, 1));
 }
 
-vec4 kuwaharaFastCircular(vec2 uv, int radius) {
+vec4 kuwahara(vec2 uv, int radius) {
   QuadAcc q[4];
   sampleCircularQuadrants(uv, radius, q);
 
@@ -98,7 +98,6 @@ vec4 kuwaharaFastCircular(vec2 uv, int radius) {
   return vec4(clamp(color, 0.0, 1.0), 1.0);
 }
 
-
 void main() {
-  fragColor = kuwaharaFastCircular(vUv, size);
+  fragColor = kuwahara(vUv, size);
 }
