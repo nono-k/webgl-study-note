@@ -1,4 +1,5 @@
 // Core
+export { Camera } from './core/Camera';
 export { Geometry } from './core/Geometry';
 export { Program } from './core/Program';
 export { Render } from './core/Render';

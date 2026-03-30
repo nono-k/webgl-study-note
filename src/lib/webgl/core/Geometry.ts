@@ -48,6 +48,25 @@ export class Geometry {
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
   }
 
+  // draw({ program }: { program: Program }) {
+  //   const gl = this.gl;
+  //   gl.bindVertexArray(this.vao);
+
+  //   for (const name in this.attributes) {
+  //     if (name === 'index') continue;
+  //     const attr = this.attributes[name];
+  //     const loc = attr.location ?? gl.getAttribLocation(program.program, name);
+  //     if (loc === -1) continue;
+
+  //     const buf = this.vbos[name];
+  //     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  //     gl.enableVertexAttribArray(loc);
+  //     gl.vertexAttribPointer(loc, attr.size, attr.type ?? gl.FLOAT, !!attr.normalized, 0, 0);
+  //   }
+
+  //   if (this.ibo) gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.ibo);
+  // }
+
   bind(program: Program) {
     const gl = this.gl;
     gl.bindVertexArray(this.vao);

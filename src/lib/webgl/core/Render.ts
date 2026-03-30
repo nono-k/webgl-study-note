@@ -1,3 +1,4 @@
+import type { Camera } from './Camera';
 import { Mesh } from './Mesh';
 import type { Scene } from './Scene';
 
@@ -32,14 +33,28 @@ export class Render {
     this.setSize(size, size);
   }
 
-  render({ scene }: { scene: Scene }) {
+  render(
+    options: Partial<{
+      scene: Scene;
+      camera: Camera;
+    }>,
+  ) {
+    const { scene, camera } = options;
     const gl = this.gl;
     gl.viewport(0, 0, this.canvas.width, this.canvas.height);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    scene.traverse(node => {
+    if (scene) {
+      scene.updateMatrixWorld();
+    }
+
+    if (camera) {
+      camera.updateMatrixWorld();
+    }
+
+    scene?.traverse(node => {
       if (node instanceof Mesh) {
-        node.draw(gl);
+        node.draw({ camera });
       }
     });
   }

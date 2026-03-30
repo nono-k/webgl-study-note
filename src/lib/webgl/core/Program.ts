@@ -9,16 +9,23 @@ export type ProgramOptions = {
   uniforms?: Record<string, any>;
 };
 
+export interface UnifomInfo extends WebGLActiveInfo {
+  uniformName: string;
+  nameComponents: string[];
+}
+
 export class Program {
   gl: WebGL2RenderingContext;
   program: WebGLProgram;
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   uniforms: Record<string, any>;
+  uniformLocations: Map<UnifomInfo, WebGLUniformLocation> = new Map();
 
   constructor(gl: WebGL2RenderingContext, opts: ProgramOptions) {
     this.gl = gl;
     this.program = this.createProgram(opts.vertex, opts.fragment);
     this.uniforms = opts.uniforms ?? {};
+    this.setShaderUniforms();
   }
 
   private compile(type: number, source: string) {
@@ -52,6 +59,24 @@ export class Program {
     return p;
   }
 
+  private setShaderUniforms() {
+    this.uniformLocations = new Map();
+
+    const numUniforms = this.gl.getProgramParameter(this.program, this.gl.ACTIVE_UNIFORMS);
+    for (let i = 0; i < numUniforms; i++) {
+      const uniform = this.gl.getActiveUniform(this.program, i) as UnifomInfo;
+      const loc = this.gl.getUniformLocation(this.program, uniform.name);
+      if (loc) {
+        this.uniformLocations.set(uniform, loc);
+      }
+
+      const split = uniform.name.match(/(\w+)/g);
+
+      uniform.uniformName = split ? split[0] : '';
+      uniform.nameComponents = split?.slice(1) || [];
+    }
+  }
+
   use() {
     this.gl.useProgram(this.program);
     this.setUniforms();
@@ -59,19 +84,66 @@ export class Program {
 
   setUniforms() {
     const gl = this.gl;
+    let textureUint = -1;
 
-    for (const name in this.uniforms) {
-      const value = this.uniforms[name].value;
-      const type = this.uniforms[name].type;
-      const loc = gl.getUniformLocation(this.program, name);
-      if (loc === null) continue;
+    // for (const name in this.uniforms) {
+    //   const value = this.uniforms[name].value;
+    //   const type = this.uniforms[name].type;
+    //   const loc = gl.getUniformLocation(this.program, name);
+    //   if (loc === null) continue;
 
-      if (name === 'uTexture') {
-        value.bind();
+    //   if (name === 'uTexture') {
+    //     value.bind();
+    //   }
+
+    //   this.setUniform(gl, loc, value, type);
+    // }
+
+    this.uniformLocations.forEach((location, activeUniform) => {
+      // biome-ignore lint/style/useConst: <explanation>
+      let uniform = this.uniforms[activeUniform.uniformName];
+
+      for (const component of activeUniform.nameComponents) {
+        if (!uniform) break;
+
+        if (component in uniform) {
+          uniform = uniform[component];
+        } else if (Array.isArray(uniform.value)) {
+          break;
+        } else {
+          uniform = undefined;
+          break;
+        }
       }
 
-      this.setUniform(gl, loc, value, type);
-    }
+      if (!uniform) {
+        return console.warn(`Uniform ${activeUniform.name} has not been supplied`);
+      }
+
+      if (uniform && uniform.value === undefined) {
+        return console.warn(`Uniform ${activeUniform.name} uniform is missing a value parameter`);
+      }
+
+      if (uniform.value.texture) {
+        textureUint = textureUint + 1;
+        uniform.value.bind(textureUint);
+        return this.setUniform(gl, location, textureUint, 'init');
+      }
+
+      if (uniform.value.length && uniform.value[0].texture) {
+        const textureUnits = [] as number[];
+
+        // biome-ignore lint/complexity/noForEach: <explanation>
+        uniform.value.forEach((value: { update: (unit: number) => void }) => {
+          textureUint = textureUint + 1;
+          value.update(textureUint);
+          textureUnits.push(textureUint);
+        });
+        return this.setUniform(gl, location, textureUnits, 'init');
+      }
+
+      this.setUniform(gl, location, uniform.value, uniform.type);
+    });
   }
 
   setUniform(gl: WebGL2RenderingContext, loc: WebGLUniformLocation, value: number | number[] | Float32Array, type: string) {
