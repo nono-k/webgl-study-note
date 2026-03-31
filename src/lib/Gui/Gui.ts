@@ -22,10 +22,10 @@ export class Gui extends Pane {
     });
   }
 
-  addSaveBtn(render: Render, scene: Scene) {
+  addSaveBtn(render: Render, scene: Scene, size: { width?: number; height?: number } = {}) {
     const EXPORT_PARAMS = {
-      width: 1600,
-      height: 900,
+      width: size.width || 1600,
+      height: size.height || 900,
       save: () => exportJpg(render, scene, EXPORT_PARAMS.width, EXPORT_PARAMS.height),
     };
 
