@@ -16,7 +16,7 @@ export const onload = () => {
   const scene = new Scene();
 
   const positions = new Float32Array([0.0, 0.5, 0.0, -0.5, -0.5, 0.0, 0.5, -0.5, 0.0]);
-  const uvs = new Float32Array([0, 1, 1, 1, 0, 0, 1, 0]);
+  const uvs = new Float32Array([0, 0, 1, 0, 0, 1]);
   const indices = new Uint16Array([0, 1, 2]);
 
   const geometry = new Geometry(gl, {
@@ -34,12 +34,18 @@ export const onload = () => {
   });
 
   const triangle1 = new Mesh(gl, { geometry, program });
-  triangle1.position.x = -0.7;
+  triangle1.position.x = -0.5;
+  triangle1.position.y = -0.5;
   scene.add(triangle1);
 
   const triangle2 = new Mesh(gl, { geometry, program });
-  triangle2.position.x = 0.7;
+  triangle2.position.x = 0.5;
+  triangle2.position.y = -0.5;
   scene.add(triangle2);
+
+  const triangle3 = new Mesh(gl, { geometry, program });
+  triangle3.position.y = 0.5;
+  scene.add(triangle3);
 
   const update = () => {
     render.render({ scene, camera });
