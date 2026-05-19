@@ -1,23 +1,16 @@
+import type { AttributeMap } from '../type/Geometry.type';
 import type { Program } from './Program';
-
-interface Attribute {
-  size: number;
-  data: Float32Array | Uint16Array;
-  type?: number;
-  normalized?: boolean;
-  location?: number;
-}
 
 export class Geometry {
   gl: WebGL2RenderingContext;
-  attributes: Record<string, Attribute>;
+  attributes: AttributeMap;
   vao: WebGLVertexArrayObject;
   vbos: Record<string, WebGLBuffer> = {};
   ibo: WebGLBuffer | null = null;
   indexCount = 0;
   vertexCount = 0;
 
-  constructor(gl: WebGL2RenderingContext, attributes: Record<string, Attribute>) {
+  constructor(gl: WebGL2RenderingContext, attributes: AttributeMap) {
     this.gl = gl;
     this.attributes = attributes;
 
@@ -27,6 +20,8 @@ export class Geometry {
     for (const name in attributes) {
       const attr = attributes[name];
       const { data } = attr;
+
+      if (!data) continue;
 
       if (name === 'index') {
         // --- index buffer (IBO) ---
@@ -78,9 +73,10 @@ export class Geometry {
       if (loc === -1) continue;
 
       const buf = this.vbos[name];
+      const size = attr.size || 1;
       gl.bindBuffer(gl.ARRAY_BUFFER, buf);
       gl.enableVertexAttribArray(loc);
-      gl.vertexAttribPointer(loc, attr.size, attr.type ?? gl.FLOAT, !!attr.normalized, 0, 0);
+      gl.vertexAttribPointer(loc, size, attr.type ?? gl.FLOAT, !!attr.normalized, 0, 0);
     }
 
     if (this.ibo) gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.ibo);
