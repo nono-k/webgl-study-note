@@ -43,6 +43,7 @@ export class Mesh extends Scene {
     const program = this.program;
     const geometry = this.geometry;
     const gl = this.gl;
+    const mode = geometry.attributes.wireframe ? gl.LINES : gl.TRIANGLES;
 
     if (camera) {
       if (!program.uniforms.modelMatrix) {
@@ -68,8 +69,7 @@ export class Mesh extends Scene {
 
     program.use();
     geometry.bind(program);
-    gl.drawElements(gl.TRIANGLES, geometry.indexCount, gl.UNSIGNED_SHORT, 0);
-    geometry.unbind();
+    gl.drawElements(mode, geometry.indexCount, gl.UNSIGNED_SHORT, 0);
 
     // biome-ignore lint/complexity/noForEach: <explanation>
     this.afterRenderCallbacks.forEach(f => f({ mesh: this, camera }));

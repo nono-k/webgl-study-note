@@ -14,3 +14,6 @@ export { Vec3 } from './math/Vec3';
 export { Vec4 } from './math/Vec4';
 export { Mat3 } from './math/Mat3';
 export { Mat4 } from './math/Mat4';
+
+// Extras
+export { Plane } from './extras/Plane';
