@@ -17,8 +17,7 @@ export const onload = () => {
   const scene = new Scene();
 
   const PARAMS = {
-    // wireframe: false,
-    wireframe: true,
+    wireframe: false,
     width: 1,
     height: 1,
     widthSegments: 1,
