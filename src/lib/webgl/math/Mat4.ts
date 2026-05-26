@@ -1,3 +1,4 @@
+import type { Quat } from './Quat';
 import type { Vec3 } from './Vec3';
 import * as Mat4Func from './functions/Mat4Func';
 
@@ -150,8 +151,18 @@ export class Mat4 extends Array<number> {
     return this;
   }
 
+  fromQuaternion(q: Quat) {
+    Mat4Func.fromQuat(this, q);
+    return this;
+  }
+
   inverse(m?: Mat4): Mat4 {
     Mat4Func.invert(this, m ?? this);
+    return this;
+  }
+
+  compose(q: Quat, pos: Vec3, scale: Vec3): Mat4 {
+    Mat4Func.compose(this, q, pos, scale);
     return this;
   }
 

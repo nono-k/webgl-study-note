@@ -1,3 +1,5 @@
+import type { Quat } from '../Quat';
+
 type Mat4 = Array<number>;
 type Vec3 = Array<number>;
 
@@ -445,6 +447,102 @@ export function getMaxScaleOnAxis(mat: Mat4): number {
 }
 
 // export function getRotation
+
+export function compose(dstMat: Mat4, srcRotation: Quat, srcTranslation: Vec3, srcScale: Vec3): Mat4 {
+  const te = dstMat;
+
+  // biome-ignore lint/style/useSingleVarDeclarator: <explanation>
+  const x = srcRotation[0],
+    y = srcRotation[1],
+    z = srcRotation[2],
+    w = srcRotation[3];
+  // biome-ignore lint/style/useSingleVarDeclarator: <explanation>
+  const x2 = x + x,
+    y2 = y + y,
+    z2 = z + z;
+  // biome-ignore lint/style/useSingleVarDeclarator: <explanation>
+  const xx = x * x2,
+    xy = x * y2,
+    xz = x * z2;
+  // biome-ignore lint/style/useSingleVarDeclarator: <explanation>
+  const yy = y * y2,
+    yz = y * z2,
+    zz = z * z2;
+  // biome-ignore lint/style/useSingleVarDeclarator: <explanation>
+  const wx = w * x2,
+    wy = w * y2,
+    wz = w * z2;
+  // biome-ignore lint/style/useSingleVarDeclarator: <explanation>
+  const sx = srcScale[0],
+    sy = srcScale[1],
+    sz = srcScale[2];
+
+  te[0] = (1 - (yy + zz)) * sx;
+  te[1] = (xy + wz) * sx;
+  te[2] = (xz - wy) * sx;
+  te[3] = 0;
+
+  te[4] = (xy - wz) * sy;
+  te[5] = (1 - (xx + zz)) * sy;
+  te[6] = (yz + wx) * sy;
+  te[7] = 0;
+
+  te[8] = (xz + wy) * sz;
+  te[9] = (yz - wx) * sz;
+  te[10] = (1 - (xx + yy)) * sz;
+  te[11] = 0;
+
+  te[12] = srcTranslation[0];
+  te[13] = srcTranslation[1];
+  te[14] = srcTranslation[2];
+  te[15] = 1;
+
+  return te;
+}
+
+export function fromQuat(out: Mat4, q: Vec3): Mat4 {
+  // biome-ignore lint/style/useSingleVarDeclarator: <explanation>
+  const x = q[0],
+    y = q[1],
+    z = q[2],
+    w = q[3];
+
+  const x2 = x + x;
+  const y2 = y + y;
+  const z2 = z + z;
+
+  const xx = x * x2;
+  const yx = y * x2;
+  const yy = y * y2;
+  const zx = z * x2;
+  const zy = z * y2;
+  const zz = z * z2;
+  const wx = w * x2;
+  const wy = w * y2;
+  const wz = w * z2;
+
+  out[0] = 1 - yy - zz;
+  out[1] = yx + wz;
+  out[2] = zx - wy;
+  out[3] = 0;
+
+  out[4] = yx - wz;
+  out[5] = 1 - xx - zz;
+  out[6] = zy + wx;
+  out[7] = 0;
+
+  out[8] = zx + wy;
+  out[9] = zy - wx;
+  out[10] = 1 - xx - yy;
+  out[11] = 0;
+
+  out[12] = 0;
+  out[13] = 0;
+  out[14] = 0;
+  out[15] = 1;
+
+  return out;
+}
 
 export function perspective(out: Mat4, fovy: number, aspect: number, near: number, far: number): Mat4 {
   const f = 1.0 / Math.tan(fovy / 2);
