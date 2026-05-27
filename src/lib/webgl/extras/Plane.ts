@@ -20,6 +20,13 @@ interface BuildPlaneOptions {
   depth: number;
   wSegs: number;
   hSegs: number;
+  u?: number;
+  v?: number;
+  w?: number;
+  uDir?: number;
+  vDir?: number;
+  i?: number;
+  ii?: number;
 }
 
 export class Plane extends Geometry {
@@ -37,7 +44,7 @@ export class Plane extends Geometry {
     const uv = new Float32Array(num * 2);
     let index = numIndices > 65535 ? new Uint32Array(numIndices) : new Uint16Array(numIndices);
 
-    Plane.buildPlane({ position, normal, uv, index, width, height, depth: 0, wSegs, hSegs });
+    Plane.buildPlane(position, normal, uv, index, width, height, 0, wSegs, hSegs);
 
     if (wireframe) {
       index = Plane.buildWireframeIndex(index);
@@ -54,35 +61,46 @@ export class Plane extends Geometry {
     super(gl, attributes);
   }
 
-  static buildPlane(options: BuildPlaneOptions) {
-    const { position, normal, uv, index, width, height, depth, wSegs, hSegs } = options;
-    const u = 0;
-    const v = 1;
-    const w = 2;
-    const uDir = 1;
-    const vDir = 1;
-    let i = 0;
+  static buildPlane(
+    position: Float32Array,
+    normal: Float32Array,
+    uv: Float32Array,
+    index: Uint32Array | Uint16Array,
+    width: number,
+    height: number,
+    depth: number,
+    wSegs: number,
+    hSegs: number,
+    u = 0,
+    v = 1,
+    w = 2,
+    uDir = 1,
+    vDir = -1,
+    i = 0,
+    ii = 0,
+  ) {
     const io = i;
-    let ii = 0;
+    let idx = i;
+    let idx2 = ii;
 
     const segW = width / wSegs;
     const segH = height / hSegs;
 
     for (let iy = 0; iy <= hSegs; iy++) {
       const y = iy * segH - height / 2;
-      for (let ix = 0; ix <= wSegs; ix++, i++) {
+      for (let ix = 0; ix <= wSegs; ix++, idx++) {
         const x = ix * segW - width / 2;
 
-        position[i * 3 + u] = x * uDir;
-        position[i * 3 + v] = y * vDir;
-        position[i * 3 + w] = depth / 2;
+        position[idx * 3 + u] = x * uDir;
+        position[idx * 3 + v] = y * vDir;
+        position[idx * 3 + w] = depth / 2;
 
-        normal[i * 3 + u] = 0;
-        normal[i * 3 + v] = 0;
-        normal[i * 3 + w] = depth >= 0 ? 1 : -1;
+        normal[idx * 3 + u] = 0;
+        normal[idx * 3 + v] = 0;
+        normal[idx * 3 + w] = depth >= 0 ? 1 : -1;
 
-        uv[i * 2] = ix / wSegs;
-        uv[i * 2 + 1] = 1 - iy / hSegs;
+        uv[idx * 2] = ix / wSegs;
+        uv[idx * 2 + 1] = 1 - iy / hSegs;
 
         if (iy === hSegs || ix === wSegs) continue;
 
@@ -91,14 +109,14 @@ export class Plane extends Geometry {
         const c = io + ix + (iy + 1) * (wSegs + 1) + 1;
         const d = io + ix + iy * (wSegs + 1) + 1;
 
-        index[ii * 6] = a;
-        index[ii * 6 + 1] = b;
-        index[ii * 6 + 2] = d;
-        index[ii * 6 + 3] = b;
-        index[ii * 6 + 4] = c;
-        index[ii * 6 + 5] = d;
+        index[idx2 * 6] = a;
+        index[idx2 * 6 + 1] = b;
+        index[idx2 * 6 + 2] = d;
+        index[idx2 * 6 + 3] = b;
+        index[idx2 * 6 + 4] = c;
+        index[idx2 * 6 + 5] = d;
 
-        ii++;
+        idx2++;
       }
     }
   }
