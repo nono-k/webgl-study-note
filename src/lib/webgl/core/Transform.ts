@@ -1,4 +1,6 @@
+import { Euler } from '../math/Euler';
 import { Mat4 } from '../math/Mat4';
+import { Quat } from '../math/Quat';
 import { Vec3 } from '../math/Vec3';
 
 export class Transform {
@@ -13,6 +15,8 @@ export class Transform {
 
   position: Vec3;
   scale: Vec3;
+  rotation: Euler;
+  quaternion: Quat;
   up: Vec3;
 
   constructor() {
@@ -27,7 +31,12 @@ export class Transform {
 
     this.position = new Vec3();
     this.scale = new Vec3(1);
+    this.rotation = new Euler();
+    this.quaternion = new Quat();
     this.up = new Vec3(0, 1, 0);
+
+    this.rotation.onChange = () => this.quaternion.fromEuler(this.rotation, true);
+    this.quaternion.onChange = () => this.rotation.fromQuaternion(this.quaternion, undefined, true);
   }
 
   updateMatrixWorld(force?: boolean) {
@@ -49,9 +58,11 @@ export class Transform {
   }
 
   updateMatrix() {
-    this.matrix.identity();
-    this.matrix.translate(this.position);
-    this.matrix.scale(this.scale);
+    // this.matrix.identity();
+    // this.matrix.translate(this.position);
+    // this.matrix.scale(this.scale);
+
+    this.matrix.compose(this.quaternion, this.position, this.scale);
 
     this.worldMatrixNeedsUpdate = true;
   }
