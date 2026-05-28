@@ -61,6 +61,8 @@ export const onload = () => {
   pane.addBinding(PARAMS, 'wireframe');
   pane.addBinding(PARAMS, 'width', { min: 0.1, max: 5 });
   pane.addBinding(PARAMS, 'height', { min: 0.1, max: 5 });
+  pane.addBinding(PARAMS, 'widthSegments', { min: 1, max: 10, step: 1 });
+  pane.addBinding(PARAMS, 'heightSegments', { min: 1, max: 10, step: 1 });
 
   pane.on('change', updateGeometry);
 };
