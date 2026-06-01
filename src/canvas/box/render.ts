@@ -42,8 +42,8 @@ export const onload = () => {
   scene.add(box);
 
   const update = () => {
-    // box.rotation.y += 0.005;
-    // box.rotation.x += 0.005;
+    box.rotation.y += 0.005;
+    box.rotation.x += 0.005;
     render.render({ scene, camera });
 
     requestAnimationFrame(update);
