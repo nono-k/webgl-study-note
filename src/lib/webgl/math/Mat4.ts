@@ -166,6 +166,11 @@ export class Mat4 extends Array<number> {
     return this;
   }
 
+  getRotation(q: Quat): Mat4 {
+    Mat4Func.getRotation(q, this);
+    return this;
+  }
+
   getTranslation(pos: Vec3): Mat4 {
     Mat4Func.getTranslation(pos, this);
     return this;
