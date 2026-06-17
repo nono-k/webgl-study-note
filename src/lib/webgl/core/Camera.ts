@@ -101,4 +101,9 @@ export class Camera extends Transform {
     this.projectionViewMatrix.multiply(this.projectionMatrix, this.viewMatrix);
     return this;
   }
+
+  lookAt(target: Vec3) {
+    super.lookAt(target, true);
+    return this;
+  }
 }

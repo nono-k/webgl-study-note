@@ -58,12 +58,16 @@ export class Transform {
   }
 
   updateMatrix() {
-    // this.matrix.identity();
-    // this.matrix.translate(this.position);
-    // this.matrix.scale(this.scale);
-
     this.matrix.compose(this.quaternion, this.position, this.scale);
 
     this.worldMatrixNeedsUpdate = true;
+  }
+
+  lookAt(target: Vec3, invert = false) {
+    if (invert) this.matrix.lookAt(this.position, target, this.up);
+    else this.matrix.lookAt(target, this.position, this.up);
+
+    this.matrix.getRotation(this.quaternion);
+    this.rotation.fromQuaternion(this.quaternion);
   }
 }
