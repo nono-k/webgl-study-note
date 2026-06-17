@@ -18,3 +18,4 @@ export { Mat4 } from './math/Mat4';
 // Extras
 export { Plane } from './extras/Plane';
 export { Box } from './extras/Box';
+export { Orbit } from './extras/Orbit';
