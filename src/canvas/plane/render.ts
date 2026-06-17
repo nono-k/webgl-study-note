@@ -1,5 +1,5 @@
 import { Gui } from '@/lib/Gui/Gui';
-import { Camera, Mesh, Plane, Program, Render, Scene } from '@/lib/webgl';
+import { Camera, Mesh, Orbit, Plane, Program, Render, Scene } from '@/lib/webgl';
 
 import fragment from './index.frag?raw';
 import vertex from './index.vert?raw';
@@ -13,6 +13,8 @@ export const onload = () => {
 
   const camera = new Camera(gl, { fov: 45, near: 0.1, far: 100 });
   camera.position.z = 3;
+
+  const controls = new Orbit(camera);
 
   const scene = new Scene();
 
@@ -39,6 +41,8 @@ export const onload = () => {
 
   const update = () => {
     render.render({ scene, camera });
+
+    controls.update();
 
     requestAnimationFrame(update);
   };

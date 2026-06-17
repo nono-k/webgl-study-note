@@ -1,5 +1,5 @@
 import { Gui } from '@/lib/Gui/Gui';
-import { Box, Camera, Mesh, Program, Render, Scene } from '@/lib/webgl';
+import { Box, Camera, Mesh, Orbit, Program, Render, Scene, Vec3 } from '@/lib/webgl';
 
 import fragment from './index.frag?raw';
 import vertex from './index.vert?raw';
@@ -14,6 +14,8 @@ export const onload = () => {
 
   const camera = new Camera(gl, { fov: 45, near: 0.1, far: 100 });
   camera.position.z = 3;
+
+  const controls = new Orbit(camera);
 
   const scene = new Scene();
 
@@ -45,6 +47,8 @@ export const onload = () => {
     box.rotation.y += 0.005;
     box.rotation.x += 0.005;
     render.render({ scene, camera });
+
+    controls.update();
 
     requestAnimationFrame(update);
   };
