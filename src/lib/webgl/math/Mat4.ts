@@ -1,6 +1,6 @@
-import type { Quat } from './Quat';
-import type { Vec3 } from './Vec3';
 import * as Mat4Func from './functions/Mat4Func';
+import type { Quat } from './Quat';
+import type { Vec3, Vec3Tuple } from './Vec3';
 
 export class Mat4 extends Array<number> {
   constructor(
@@ -139,7 +139,14 @@ export class Mat4 extends Array<number> {
     top,
     near,
     far,
-  }: { left: number; right: number; bottom: number; top: number; near: number; far: number }): Mat4 {
+  }: {
+    left: number;
+    right: number;
+    bottom: number;
+    top: number;
+    near: number;
+    far: number;
+  }): Mat4 {
     Mat4Func.ortho(this, left, right, bottom, top, near, far);
     return this;
   }
@@ -185,7 +192,7 @@ export class Mat4 extends Array<number> {
     return Mat4Func.getMaxScaleOnAxis(this);
   }
 
-  lookAt(eye: Vec3, target: Vec3, up: Vec3): Mat4 {
+  lookAt(eye: Vec3 | Vec3Tuple, target: Vec3 | Vec3Tuple, up: Vec3): Mat4 {
     Mat4Func.targetTo(this, eye, target, up);
     return this;
   }

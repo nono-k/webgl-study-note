@@ -1,3 +1,4 @@
+import type { AttributeData } from '../type/Geometry.type';
 import * as Vec3Func from './functions/Vec3Func';
 
 export type Vec3Tuple = [x: number, y: number, z: number];
@@ -117,5 +118,12 @@ export class Vec3 extends Array<number> {
 
   clone(): Vec3 {
     return new Vec3(this[0], this[1], this[2]);
+  }
+
+  fromArray(a: number[] | AttributeData, o = 0): Vec3 {
+    this[0] = a[o];
+    this[1] = a[o + 1];
+    this[2] = a[o + 2];
+    return this;
   }
 }
