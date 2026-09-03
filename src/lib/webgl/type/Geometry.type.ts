@@ -6,6 +6,7 @@ export interface Attribute {
   type?: number;
   normalized?: boolean;
   location?: number;
+  count: number;
 }
 
 export type AttributeMap = Record<string, Partial<Attribute>>;

@@ -103,7 +103,7 @@ export class Sphere extends Geometry {
 
     Object.assign(attributes, {
       position: { size: 3, data: position },
-      // normal: { size: 3, data: normal },
+      normal: { size: 3, data: normal },
       uv: { size: 2, data: uv },
       index: { data: index },
       wireframe,

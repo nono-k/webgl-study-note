@@ -1,9 +1,8 @@
+import { Mat3 } from '../math/Mat3';
+import { Mat4 } from '../math/Mat4';
 import type { Camera } from './Camera';
 import type { Geometry } from './Geometry';
 import type { Program } from './Program';
-
-import { Mat3 } from '../math/Mat3';
-import { Mat4 } from '../math/Mat4';
 import { Scene } from './Scene';
 import { Transform } from './Transform';
 
@@ -15,6 +14,7 @@ export class Mesh extends Scene {
   program: Program;
 
   modelViewMatrix: Mat4;
+  normalMatrix: Mat3;
   beforeRenderCallbacks: MeshRenderCallback[];
   afterRenderCallbacks: MeshRenderCallback[];
 
@@ -25,6 +25,7 @@ export class Mesh extends Scene {
     this.program = program;
 
     this.modelViewMatrix = new Mat4();
+    this.normalMatrix = new Mat3();
     this.beforeRenderCallbacks = [];
     this.afterRenderCallbacks = [];
   }
@@ -51,6 +52,7 @@ export class Mesh extends Scene {
           modelMatrix: { value: null },
           viewMatrix: { value: null },
           modelViewMatrix: { value: null },
+          normalMatrix: { value: null },
           projectionMatrix: { value: null },
           cameraPosition: { value: null },
         });
@@ -60,8 +62,10 @@ export class Mesh extends Scene {
       program.uniforms.cameraPosition.value = camera.worldPosition;
       program.uniforms.viewMatrix.value = camera.viewMatrix;
       this.modelViewMatrix.multiply(camera.viewMatrix, this.worldMatrix);
+      this.normalMatrix.getNormalMatrix(this.modelViewMatrix);
       program.uniforms.modelMatrix.value = this.worldMatrix;
       program.uniforms.modelViewMatrix.value = this.modelViewMatrix;
+      program.uniforms.normalMatrix.value = this.normalMatrix;
     }
 
     // biome-ignore lint/complexity/noForEach: <explanation>
