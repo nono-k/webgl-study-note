@@ -1,6 +1,7 @@
 import { Euler } from '../math/Euler';
 import { Mat4 } from '../math/Mat4';
 import { Quat } from '../math/Quat';
+import type { Vec3Tuple } from '../math/Vec3';
 import { Vec3 } from '../math/Vec3';
 
 export class Transform {
@@ -63,7 +64,7 @@ export class Transform {
     this.worldMatrixNeedsUpdate = true;
   }
 
-  lookAt(target: Vec3, invert = false) {
+  lookAt(target: Vec3 | Vec3Tuple, invert = false) {
     if (invert) this.matrix.lookAt(this.position, target, this.up);
     else this.matrix.lookAt(target, this.position, this.up);
 

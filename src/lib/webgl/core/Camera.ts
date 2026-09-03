@@ -1,4 +1,5 @@
 import { Mat4 } from '../math/Mat4';
+import type { Vec3Tuple } from '../math/Vec3';
 import { Vec3 } from '../math/Vec3';
 import { Transform } from './Transform';
 
@@ -36,7 +37,7 @@ export class Camera extends Transform {
   top?: number;
   zoom: number;
 
-  constructor(gl: WebGL2RenderingContext, options?: Partial<CameraOptions>) {
+  constructor(_gl: WebGL2RenderingContext, options?: Partial<CameraOptions>) {
     super();
 
     const { near = 0.1, far = 100, fov = 45, aspect = 1, left, right, bottom, top, zoom = 1 } = options || {};
@@ -102,7 +103,7 @@ export class Camera extends Transform {
     return this;
   }
 
-  lookAt(target: Vec3) {
+  lookAt(target: Vec3 | Vec3Tuple) {
     super.lookAt(target, true);
     return this;
   }
