@@ -10,6 +10,7 @@ export const onload = () => {
   render.fitScreen();
   const gl = render.gl;
   gl.clearColor(1.0, 1.0, 1.0, 1.0);
+  gl.enable(gl.DEPTH_TEST);
 
   const camera = new Camera(gl, { fov: 45, near: 0.1, far: 100 });
   camera.position.z = 3;
