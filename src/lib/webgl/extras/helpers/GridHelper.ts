@@ -13,7 +13,7 @@ export interface GridHelperOptions {
 export class GridHelper extends Mesh {
   constructor(gl: WebGL2RenderingContext, options?: Partial<GridHelperOptions>) {
     const { size = 10, divisions = 10, color = new Vec3(0.75, 0.75, 0.75) } = options || {};
-    const numVertices = (size + 1) * 2 * 2;
+    const numVertices = (divisions + 1) * 2 * 2;
     const vertices = new Float32Array(numVertices * 3);
 
     const hs = size / 2;
