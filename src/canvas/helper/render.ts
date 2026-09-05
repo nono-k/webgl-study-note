@@ -26,7 +26,7 @@ export const onload = () => {
   gl.enable(gl.DEPTH_TEST);
 
   const camera = new Camera(gl, { fov: 45, near: 0.1, far: 100 });
-  camera.position.set(1, 1, 7);
+  camera.position.set(3, 2, 7);
   camera.lookAt([0, 0, 0]);
 
   const controls = new Orbit(camera);
@@ -44,6 +44,7 @@ export const onload = () => {
   };
 
   const grid = new GridHelper(gl);
+  grid.position.z = -0.01;
   scene.add(grid);
 
   const axes = new AxesHelper(gl, { size: 6, symmetric: true });
