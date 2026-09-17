@@ -126,7 +126,7 @@ export class Program {
 
       if (uniform.value.texture) {
         textureUint = textureUint + 1;
-        uniform.value.bind(textureUint);
+        uniform.value.update(textureUint);
         return this.setUniform(gl, location, textureUint, 'init');
       }
 
