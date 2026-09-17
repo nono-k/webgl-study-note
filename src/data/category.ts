@@ -3,6 +3,7 @@ import type { glslCategory, webglCategory } from '@/types/config';
 export const webglCategoryList: webglCategory[] = [
   { name: 'Basic', slug: 'basic' },
   { name: 'Geometry', slug: 'geometry' },
+  { name: 'Texture', slug: 'texture' },
   { name: 'Extras', slug: 'extras' },
 ];
 
