@@ -7,8 +7,10 @@ export { Render } from './core/Render';
 export { Scene } from './core/Scene';
 export { Texture } from './core/Texture';
 export { Transform } from './core/Transform';
-export { Box } from './extras/Box';
+
 // Extras
+export { Box } from './extras/Box';
+export { CubeTexture } from './extras/CubeTexture';
 export { AxesHelper } from './extras/helpers/AxesHelper';
 export { FaceNormalsHelper } from './extras/helpers/FaceNormalsHelper';
 export { GridHelper } from './extras/helpers/GridHelper';
