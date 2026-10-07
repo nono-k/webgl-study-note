@@ -43,7 +43,7 @@ export const onload = () => {
     vertex: boxVertex,
     fragment: boxFragment,
     uniforms: {
-      uEnviroment: { value: environmentTexture },
+      uEnvironment: { value: environmentTexture },
     },
   });
 
@@ -64,7 +64,7 @@ export const onload = () => {
     vertex: sphereVertex,
     fragment: sphereFragment,
     uniforms: {
-      uEnviroment: { value: environmentTexture },
+      uEnvironment: { value: environmentTexture },
     },
   });
 
